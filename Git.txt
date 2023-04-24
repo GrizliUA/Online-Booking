@@ -1,0 +1,14 @@
+₴₴₴   Тік коли створюєм   ₴₴₴
+git init
+
+₴₴₴   Тік коли створюєм   ₴₴₴
+git pull https://github.com/GrizliUA/Online-Booking.git //Помилка, взяв ремоут, по списку і пішло
+
+git add *
+
+git commit -m "хххххххххххххххххххх"
+
+₴₴₴   Тік коли створюєм   ₴₴₴
+git remote add origin https://github.com/GrizliUA/Online-Booking.git
+
+git push origin master
