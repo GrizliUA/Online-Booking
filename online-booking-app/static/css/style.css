@@ -63,16 +63,17 @@ body{
 }
 .form-ticket{
     display: flex;
-    justify-content: space-between;
-    /* flex-wrap: wrap;
-    gap: 6px; */
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    flex-direction: row;
+    /* gap: 6px;  */
 }
-/* .name{
-    flex: 1 0 130px;
+.item{
+    flex: 1 1 100px;
 }
 button{
-    flex: 1 0 40px;
-} */
+    flex: 1 1 40px;
+}
 .footer-block{
     position: absolute;
     bottom: 0;
@@ -235,4 +236,10 @@ a{
 .some:hover::after{
     transform: scaleX(1);
     transform-origin: bottom left;
+}
+
+.map iframe{
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
 }

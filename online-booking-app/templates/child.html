@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <main class="ticket-block">
+        <div class="h">
+            <h1 class="some">Пошук квитків</h1>
+            <!-- <h3>авіаквитки</h3> -->
+        </div>
+        <div class="form-div">
+            <form action="" class="form-ticket">
+                <!-- <label for="city-select-start">Звідки</label> -->
+                <!-- <select name="City" id="city-select-start">
+                    <option>Звідки</option>
+                </select> -->
+                
+                <!-- <label for="city-select-destination">Куди</label> -->
+                <div class="item">
+                    <div class="input-div some">
+                        <input type="text" name="start-city" list="city-name" placeholder="Звідки" id="without-arrow">
+                        <datalist id="city-name">
+                            <option value="City1"></option>
+                        </datalist>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some name">
+                        <input type="text" name="start-city" list="city-name" placeholder="Куди" id="without-arrow">
+                        <datalist id="city-name">
+                            <option value="City1"></option>
+                        </datalist>
+                    </div>
+                </div>
+                    
+                <!-- <label for="there">Туди</label> -->
+                <div class="item">
+                    <div class="some name">
+                        <input type="date" id="there" class="datediv">
+                    </div>
+                </div>
+                    <!-- <label for="back">Назад</label> -->
+                <div class="item">
+                    <div class="some name">
+                        <input type="date" id="back" class="datediv some">
+                    </div>
+                </div>
+                    <!-- <label for="number-of-passengers">Пасажири</label> -->
+                <div class="item">
+                    <div class="some name">
+                        <input type="number" id="number-of-passengers" class="datediv" placeholder="Пасажири">
+                    </div>
+                </div>
+                    <!-- <label for="class-select">Клас</label> -->
+                <div class="item">
+                    <div class="input-div some name">
+                        <input type="text" name="class-option" list="classes" placeholder="Клас" id="without-arrow">
+                        <datalist id="classes">
+                            <option value="eco">Економ</option>
+                        </datalist>
+                    </div>
+                </div>
+                
+                <button class="sub-btn">Знайти</button>
+                
+            </form>
+            
+        </div>
+    </main>
+{% endblock %}
