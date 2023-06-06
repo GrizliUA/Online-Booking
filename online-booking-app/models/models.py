@@ -16,7 +16,7 @@ class Airport(db.Model):
 
 class Agency(db.Model):
     __tablename__ = 'agency'
-    agency_ID = db.Column(db.Integer, primary_key=True)
+    agency_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(45))
     
 class PlaneModels(db.Model):

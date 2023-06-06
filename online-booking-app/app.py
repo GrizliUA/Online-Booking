@@ -3,7 +3,7 @@ import json
 from flask_mysqldb import MySQL
 from flask import Flask, render_template, request, redirect, make_response
 from flask_restful import Resource, Api
-from models.models import db
+from models.models import *
 from database_details import Database_dt
 
 app = Flask(__name__)
@@ -42,21 +42,109 @@ def error():
     except:
         return response_400()
 
+def category_response(categories_data):
+    return {"category_id": categories_data[0][0], "category_label": categories_data[0][1]}
+
+def item_response(item_data):
+    return {"item_id": item_data[0][0],
+            "item_category_id": item_data[0][1],
+            "item_label": item_data[0][2],
+            "item_info": item_data[0][3],
+            "item_video_link": item_data[0][4],
+            "item_photo_link": item_data[0][5],
+            "item_date": item_data[0][6],
+            "item_score": item_data[0][7]}
+
+def obj_to_list(obj) -> list:
+    new_list = []
+    for row in obj:
+        new_list.append(list((getattr(row, col)) for col in row.__table__.columns.keys()))
+    return new_list
+
+@app.route('/' , methods=['GET'])
+def main():
+    """Main page function"""
+    try:
+        categories_data = obj_to_list(Categories.query.all())
+        return render_template('main.html', categories=categories_data)
+    except:
+        return redirect("http://127.0.0.1:5000/error")
 
 
-test_data = [1,'03.05.2023','04.05.2023']
+class Api(Resource):
+    def get(self):
+        #try:
+        flight = Flight()
+        response = {"uid": flight.flight_ID,
+                    "fli_id": flight.flights_ID,
+                    "p_id": flight.passanger_ID,
+                    "price": flight.price,}
+        return response_200(response)
+        #except:
+            #return response_400()
+api.add_resource(Api, '/api')
 
-# class Api(Resource):
-#     def get(self):
-#         try:
-#             flight = Flight(test_data)
-#             response = {"uid": flight.uid,
-#                         "dep": flight.departure_time,
-#                         "arr": flight.arrival_time}
-#             return response_200(response)
-#         except:
-#             return response_400()
-# api.add_resource(Api, '/api')
+class ApiItemSearch(Resource):
+    """Item API Search realization"""
+    def get(self):
+        """API Item Search"""
+        try:
+            data = ''
+
+            for key, value in request.args.items():
+                data += f'{key} = "{value}", '
+            data = data[:-2]
+
+            if data == '':
+                return response_400()
+            
+
+            item_data = obj_to_list(Items.query.filter_by(**eval('dict(' + data + ')')).all())
+
+            if not item_data:
+                return response_404()
+
+            response = item_response(item_data)
+
+            return response_200(response)
+        except:
+            return response_400()
+api.add_resource(ApiItemSearch, '/api/item/search/')
+
+@app.route('/item/searching', methods=['GET', 'POST'])
+def item_searching():
+    """Search page function"""
+    try:
+        if len(request.form["item_label"]) > 0 and len(request.form["item_date"]) > 0:
+            url_req = urlencode({"item_label": request.form["item_label"], "item_date": request.form["item_date"]})
+        elif len(request.form["item_label"]) > 0:
+            url_req = urlencode({"item_label": request.form["item_label"]})
+        elif len(request.form["item_date"]) > 0:
+            url_req = urlencode({"item_date": request.form["item_date"]})
+        url = "http://127.0.0.1:5000/api/item/search/?" + url_req
+
+        with urlopen(url) as req:
+            res = req.read()
+        dict_res = json.loads(res)
+        values_list = list(dict_res.values())
+
+        return redirect(f"http://127.0.0.1:5000/item/{values_list[2]}")
+    except:
+        return redirect("http://127.0.0.1:5000/item/search")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
