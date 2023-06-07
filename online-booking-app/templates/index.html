@@ -1,32 +1,14 @@
 <!DOCTYPE html>
 <html lang="ua">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/style.css"> 
-        <title>Aviatickets</title>
-    </head>
-
+{% include "blocks/head.html" %}
     <body>
         <div class="body-div">
             <div class="content-div">
                 <header class="header-block pr-20 pl-20">
                     <div class="header-div">
-                        <a href=""><img src="./images/завантаження.png" id="icon" width="50" height="50"></img></a>
+                        <a href=""><img src="/static/images/img.png" id="icon" width="50" height="50"></img></a>
                         <a href=""><p class="logo-text">quick tickets</p></a>
-                        <!-- <div class="header-list">
-                            <a href="" class="border-radius rounded pr-20 pl-20 size-40 link align-center a-hover a-color">Головна</a>
-                            <a href="" class="border-radius rounded pr-20 pl-20 size-40 link align-center a-hover a-color">Про нас</a>
-                            <a href="" class="border-radius rounded pr-20 pl-20 size-40 link align-center a-hover a-color">Мова</a>
-                            <a href="" class="border-radius rounded pr-20 pl-20 size-40 link align-center a-hover a-color">Особистий кабінет</a>
-                        </div> -->
-                        <ul class="header-list2">
+                        <ul class="header-list">
                             <li><a href="https://tickets.ua/">Головна</a></li>
                             <li><a href="">Про нас</a></li>
                             <li><a href="">Мова</a></li>
