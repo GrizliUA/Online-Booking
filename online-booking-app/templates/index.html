@@ -1,88 +1,11 @@
-<!DOCTYPE html>
-<html lang="ua">
-{% include "blocks/head.html" %}
-    <body>
-        <div class="body-div">
-            <div class="content-div">
-                <header class="header-block pr-20 pl-20">
-                    <div class="header-div">
-                        <a href=""><img src="/static/images/img.png" id="icon" width="50" height="50"></img></a>
-                        <a href=""><p class="logo-text">quick tickets</p></a>
-                        <ul class="header-list">
-                            <li><a href="https://tickets.ua/">Головна</a></li>
-                            <li><a href="">Про нас</a></li>
-                            <li><a href="">Мова</a></li>
-                            <li><a href="">Особистий кабінет</a></li>
-                        </ul>
-                    </div>
-                </header>
-                <main class="ticket-block">
-                    <div class="h">
-                        <h1 class="some">Пошук квитків</h1>
-                    </div>
-                    <div class="form-div">
-                        <form action="" class="form-ticket">
-                            <!-- <label for="city-select-start">Звідки</label> -->
-                            <!-- <select name="City" id="city-select-start">
-                                <option>Звідки</option>
-                            </select> -->
-                            
-                            <!-- <label for="city-select-destination">Куди</label> -->
-                            <div class="name">
-                                <div class="input-div some">
-                                    <input type="text" name="start-city" list="city-name" placeholder="Звідки" id="without-arrow">
-                                    <datalist id="city-name">
-                                        <option value="City1"></option>
-                                    </datalist>
-                                </div>
-                            </div>
-                            <div class="name">
-                                <div class="input-div some name">
-                                    <input type="text" name="start-city" list="city-name" placeholder="Куди" id="without-arrow">
-                                    <datalist id="city-name">
-                                        <option value="City1"></option>
-                                    </datalist>
-                                </div>
-                            </div>
-                                
-                            <!-- <label for="there">Туди</label> -->
-                            <div class="name">
-                                <div class="some name">
-                                    <input type="date" id="there" class="datediv">
-                                </div>
-                            </div>
-                                <!-- <label for="back">Назад</label> -->
-                            <div class="name">
-                                <div class="some name">
-                                    <input type="date" id="back" class="datediv some">
-                                </div>
-                            </div>
-                                <!-- <label for="number-of-passengers">Пасажири</label> -->
-                            <div class="name">
-                                <div class="some name">
-                                    <input type="number" id="number-of-passengers" class="datediv" placeholder="Пасажири">
-                                </div>
-                            </div>
-                                <!-- <label for="class-select">Клас</label> -->
-                            <div class="name">
-                                <div class="input-div some name">
-                                    <input type="text" name="class-option" list="classes" placeholder="Клас" id="without-arrow">
-                                    <datalist id="classes">
-                                        <option value="eco">Економ</option>
-                                    </datalist>
-                                </div>
-                            </div>
-                            
-                            <button class="sub-btn">Знайти</button>
-                            
-                        </form>
-                        
-                    </div>
-                </main>
-                <footer class="footer-block">
+{% extends "base.html" %}
 
-                </footer>
-            </div>
-        </div>
-    </body>
-</html>
+{% block content %}
+
+{% include "blocks/ticket.html" %}
+{% include "blocks/other.html" %}
+{% include "blocks/mobile.html" %}
+{% include "blocks/popular.html" %}
+{% include "blocks/questions.html" %}
+
+{% endblock %}

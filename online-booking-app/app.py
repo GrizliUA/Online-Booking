@@ -1,7 +1,8 @@
 """Modules providing Flask realising hosting web-application at local instance"""
 import json
+from urllib.request import urlopen
 from flask_mysqldb import MySQL
-from flask import Flask, render_template, request, redirect, make_response, jsonify
+from flask import Flask, render_template, request, redirect, make_response, jsonify, url_for
 from flask_restful import Resource, Api
 from models.models import *
 from database_details import Database_dt
@@ -38,35 +39,17 @@ def response_404(response='Not Found'):
 # def error():
 #     """Error page function"""
 #     try:
-#         return render_template('child.html')
+#         return render_template('error.html')
 #     except:
 #         return response_400()
 
-def category_response(categories_data):
-    return {"category_id": categories_data[0][0], "category_label": categories_data[0][1]}
 
-def item_response(item_data):
-    return {"item_id": item_data[0][0],
-            "item_category_id": item_data[0][1],
-            "item_label": item_data[0][2],
-            "item_info": item_data[0][3],
-            "item_video_link": item_data[0][4],
-            "item_photo_link": item_data[0][5],
-            "item_date": item_data[0][6],
-            "item_score": item_data[0][7]}
 
 # def obj_to_list(obj) -> list:
 #     new_list = []
 #     for row in obj:
-#         keys = row.__table__.columns.keys()
-#         values = []
-#         for col in keys:
-#             values.append(getattr(row, col))
-
-
-#         #new_list.append(list((getattr(row, col)) for col in row.__table__.columns.keys()))
-#     return new_list
-
+#         new_list.append(list((getattr(row, col)) for col in row.__table__.columns.keys()))
+#     return new_list 
 
 def obj_to_json(obj) -> str:
     new_list = []
@@ -75,19 +58,57 @@ def obj_to_json(obj) -> str:
         new_list.append(row_dict)
     return json.dumps(new_list)
 
+# @app.route('/' , methods=['GET'])
+# def main():
+#     """main page function"""
+#     try:
+#         return render_template('test.html')
+#     except:
+#         return response_400()
 
 
+# @app.route('/' , methods=['GET'])
+# def main():
+#     """main page function"""
+#     try:
+#         return render_template('child.html')
+#     except:
+#         return response_400()
 
+# @app.route('/other_page')
+# def other_page():
+#     return render_template('ticket.html')
+
+# @app.route('/redirect_to_other_page')
+# def redirect_to_other_page():
+#     return redirect(url_for('other_page'))
+
+
+class Cities_Api(Resource):
+    def get(self):
+        try:
+            data = obj_to_json(City.query.all())
+            return response_200(data)
+        except:
+            return response_400()
+api.add_resource(Cities_Api, '/cities')
 
 
 @app.route('/' , methods=['GET'])
 def main():
     """Main page function"""
     try:
-        categories_data = obj_to_json(City.query.all())
-        return response_200(categories_data)
+        url = "http://127.0.0.1:5000/cities"
+        with urlopen(url) as req:
+            res = req.read()
+        dict_cities = json.loads(res)
+
+
+        return render_template('test.html', cities = dict_cities)
+        #return response_200(dict_res)
     except:
-        return redirect("http://127.0.0.1:5000/error")
+        return response_400()
+        #return redirect("http://127.0.0.1:5000/error")
 
 
 # class Api(Resource):

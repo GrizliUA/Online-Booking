@@ -1,0 +1,48 @@
+<main class="ticket-block">
+    <div class="h">
+        <h1 class="">Пошук авіаквитків</h1>
+    </div>
+    <div class="form-div">
+        <form action="" class="form-ticket">
+            <div class="inp">
+                <div class="item">
+                    <div class="input-div some">
+                        <input type="text" name="    list="start-city" placeholder="Звідки" id="without-arrow" required>
+                        <datalist id="start-city">
+                            {% for city in cities %}
+                            <option value="{{ city.city_ID }}">{{ city.country }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some name">
+                        <input type="text" name="end-city" list="end-city" placeholder="Куди" id="without-arrow" required>
+                        <datalist id="end-city">
+                            {% for city in cities %}
+                            <option value="{{ city.city_ID }}">{{ city.country }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="text" id="there" class="datediv" placeholder="Туди (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="text" id="back" class="datediv" placeholder="Назад (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                        
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="number" id="number-of-passengers" class="datediv" placeholder="Пасажири" required>
+                    </div>
+                </div>
+            </div>
+            <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Знайти</button>
+        </form>
+    </div>
+</main>
