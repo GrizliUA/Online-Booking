@@ -115,6 +115,7 @@ footer{
     border-radius: 10px;
     padding: 6px;
     text-decoration: none;
+    cursor: pointer;
 }
   
 .button1:first-child {
@@ -261,11 +262,11 @@ footer{
     background-color: #e2e8ce;
 }
 
-.form-ticket button{
+.active, .form-ticket button{
     transition: 1s all ease;
 }
 
-.active, .form-ticket button:hover{
+.active:hover, .form-ticket button:hover{
     color: #cccccc;
     background-color: crimson;
     transition: 0.8s all ease;
@@ -650,27 +651,125 @@ a{
 
 
 
-.info-form{
+.info-block{
+    /* width: 100%; */
+    /* border: 1px solid #000000; */
+    margin: 60px 100px 50px 100px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
 }
 
-.info{
-    width: 100px;
-    height: 50px;
-    font: 17px 'Geologica', monospace;
-    color: #333;
-    border: 1px solid #cccccc;
-    border-radius: 10px;
-    padding: 0 0 0 24px;
-    background-color: #fff;
+.form-block{
+    width: 80%;
 }
 
-.info-btn{
+.info-form{
+    height: 70px;
+    margin: 5px 0 5px 0;
+    border: 1px solid #cccccc;
+    border-radius: 10px; 
+    padding: 10px 20px 20px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-photo{
+    /* width: min-content; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-photo img{
+    width: 50px;
     height: 50px;
+    border-radius: 50%;
+}
+
+.company-name {
+    width: 50px;
+    margin: 0;
+    font-size: 12px;
+    padding-left: 10px;
+    color: #818181;
+}
+
+.company-name p{
+    margin: 0;
+    font-size: 10px;
+}
+
+.time-date p:first-child{
+    margin: 0;
+    font-size: 25px;
+}
+
+.time-date p:last-child{
+    margin: 0;
+    font-size: small;
+    color: #818181;
+}
+
+.directions-other p{
+    margin: 0;
+    font-size: 13px;
+    color: #818181;
+}
+
+.last-child2{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.date-other{
+    width: 100px;
+}
+
+.linear{
+    width: 70px;
+    background-color: #e2e8ce;
+    border-radius: 5px;
+    width: min-content;
+    padding: 3px;
+}
+
+.price-btn-block{
+    height: inherit;
+    /* border: 1px solid #cccccc; */
+    width: 19%;
+    margin: 5px 0 5px 0;
+    border-radius: 10px;
+}
+
+.price-btn-block p{
+    margin: 5px 0;
+}
+
+.price-btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 9px;
+}
+
+.buy{
+    font-size: 13px;
+    color: #818181;
+}
+
+.price{
+    font-size: 17px;
+    font-weight: 900;
 }
 
 
@@ -686,6 +785,58 @@ a{
 }
 
 
+.error-block{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    border: 0;
+}
+
+.error-text{
+    width: 50%;
+}
+
+.error-logo{
+    width: 40%;
+}
+
+.error-btn-block{
+    width: 250px;
+    height: 50px;
+    padding: 0;
+    margin-top: 100px;
+}
+
+.error-btn-block a{
+    width: 100%;
+    height: 100%;
+}
+
+.error-btn{
+    width: inherit;
+    height: 100%;
+}
+
+.ep1{
+    font-size: 50px;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.ep2{
+    font-size: 40px;
+    font-weight: 200; 
+    margin: 15px 0;  
+}
+
+.ep3{
+    font-weight: 300;
+    margin: 30px 0;
+}
+
 #Layer_1 {
     height: 50px;
     fill: rgb(255, 255, 255);
@@ -699,4 +850,8 @@ a{
     height: 50px;
     margin-top: 12px;
     cursor: pointer;
+}
+
+#Layer_4 {
+    width: 100%;
 }

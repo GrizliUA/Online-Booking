@@ -25,6 +25,14 @@ def other_page():
 def redirect_to_other_page():
     return redirect(url_for('other_page'))
 
+@app.route('/error_page')
+def error_page():
+    return render_template('error.html')
+
+@app.route('/redirect_to_error_page')
+def redirect_to_error_page():
+    return redirect(url_for('error_page'))
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

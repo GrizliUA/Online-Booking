@@ -7,27 +7,101 @@
             <!-- <h3>авіаквитки</h3> -->
         </div>
         <div class="form-div">
-            <form action="{{ url_for('redirect_to_other_page') }}" class="form-ticket">
-                
-                <div class="info-form">
-                    <div class="some info from "></div>
-                    <div class="some info to"></div>
-                    <!-- <div class="some info plane-model"></div> -->
-                    <div class="some info boarding-time"></div>
-                    <div class="some info departure-time"></div>
-                    <div class="some info arrival-time"></div>
-                    <div class="some info passangers"></div>
-                    <div class="some info company"></div>
-                    <div class="some info base-price"></div>
-                    <!-- <div class="some info accordion"></div> -->
-                    <div class="some accordion_element">
-                        <button class="sub-btn info-btn">Купити</button>
-                    </div>
+            
+            <form action="{{ url_for('redirect_to_other_page') }}" class="form-ticket"></form>
+                <div class="info-block">
+                    
+                        <div class="form-block">
+                            <!-- div class="info-form" можна ставити скільки завгодно в залежності від кількості квитків -->
+                            <div class="info-form">
+                                <!-- Лого авіакомпанії -->
+                                <div class="company-photo"><img src="/static/images/company_logo/AA.svg" alt=""><p class="company-name">American Airlanes</p></div>
+                                <div class="time-date">
+                                    <!-- Час відправлення та час прибуття -->
+                                    <p>17:20 - 23:55</p>
+                                    <!-- Тривалість польоту -->
+                                    <p>4г 34хв тривалість</p>
+                                </div>
+                                <div class="directions-other">
+                                    <!-- Звідки куди -->
+                                    <div><p>Лондон (STN) - Анталія (AYT)</p></div>
+                                    <div class="last-child2">
+                                        <!-- Дата -->
+                                        <div class="date-other"><p>09 чер, пт</p></div>
+                                        <div class="linear"><p>прямий</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        <div class="price-btn-block">
+                            <button class="sub-btn price-btn active" type="submit" id="submitButton" value="Submit">
+                                <p class="buy">Купити за</p>
+                                <p class="price">7 730$</p>
+                            </button>
+                        </div>
                     
                 </div>
-                
-                
             </form>
+            
+            <form action="{{ url_for('redirect_to_other_page') }}" class="form-ticket"></form>
+                <div class="info-block">
+                    
+                        <div class="form-block">
+                            <!-- div class="info-form" можна ставити скільки завгодно в залежності від кількості квитків -->
+                            <div class="info-form">
+                                <!-- Лого авіакомпанії -->
+                                <div class="company-photo"><img src="/static/images/company_logo/AA.svg" alt=""><p class="company-name">American Airlanes</p></div>
+                                <div class="time-date">
+                                    <!-- Час відправлення та час прибуття -->
+                                    <p>17:20 - 23:55</p>
+                                    <!-- Тривалість польоту -->
+                                    <p>4г 34хв тривалість</p>
+                                </div>
+                                <div class="directions-other">
+                                    <!-- Звідки куди -->
+                                    <div><p>Лондон (STN) - Анталія (AYT)</p></div>
+                                    <div class="last-child2">
+                                        <!-- Дата -->
+                                        <div class="date-other"><p>09 чер, пт</p></div>
+                                        <div class="linear"><p>прямий</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-form">
+                                <!-- Лого авіакомпанії -->
+                                <div class="company-photo"><img src="/static/images/company_logo/AA.svg" alt=""><p class="company-name">American Airlanes</p></div>
+                                <div class="time-date">
+                                    <!-- Час відправлення та час прибуття -->
+                                    <p>17:20 - 23:55</p>
+                                    <!-- Тривалість польоту -->
+                                    <p>4г 34хв тривалість</p>
+                                </div>
+                                <div class="directions-other">
+                                    <!-- Звідки куди -->
+                                    <div><p>Лондон (STN) - Анталія (AYT)</p></div>
+                                    <div class="last-child2">
+                                        <!-- Дата -->
+                                        <div class="date-other"><p>09 чер, пт</p></div>
+                                        <div class="linear"><p>прямий</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="price-btn-block">
+                            <button class="sub-btn price-btn active" type="submit" id="submitButton" value="Submit">
+                                <p class="buy">Купити за</p>
+                                <p class="price">7 730$</p>
+                            </button>
+                        </div>
+                    
+                </div>
+            </form>
+            
         </div>
     </main>
 {% endblock %}
