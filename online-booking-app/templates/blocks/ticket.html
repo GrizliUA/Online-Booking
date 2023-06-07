@@ -7,10 +7,10 @@
             <div class="inp">
                 <div class="item">
                     <div class="input-div some">
-                        <input type="text" name="    list="start-city" placeholder="Звідки" id="without-arrow" required>
-                        <datalist id="start-city">
+                        <input type="text" name="start-city" list="start-city" placeholder="Звідки" id="without-arrow" required>
+                        <datalist id="start-city"> 
                             {% for city in cities %}
-                            <option value="{{ city.city_ID }}">{{ city.country }}</option>
+                            <option value="{{city.city_ID}}">{{city.country}}</option>
                             {% endfor %}
                         </datalist>
                     </div>

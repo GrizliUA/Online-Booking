@@ -102,7 +102,7 @@ def main():
         with urlopen(url) as req:
             res = req.read()
         dict_cities = json.loads(res)
-
+        print(dict_cities)
 
         return render_template('test.html', cities = dict_cities)
         #return response_200(dict_res)

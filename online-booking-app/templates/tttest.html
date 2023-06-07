@@ -11,7 +11,7 @@
         <input type="text" name="start-city" list="city-name" placeholder="Звідки" id="without-arrow" required>
         <datalist id="city-name">
             {% for city in cities %}
-            <option value="{{ city.city_ID }}">{{ city.country }}</option>
+            <option value="{{city.city_ID}}">{{city.country}}</option>
             {% endfor %}
         </datalist>
     </div>
