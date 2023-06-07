@@ -252,6 +252,13 @@ footer{
     padding: 0 0 0 24px;
 }
 
+.input-div2 input{
+    width: 210px;
+}
+.input-div3 input{
+    width: 103px;
+}
+
 .sub-btn{
     font: 17px 'Geologica', monospace;
     color: #333;
@@ -307,7 +314,7 @@ footer{
     transition: 0.4 all ease;
 }
 
-.header-list2 li::after{
+.header-list li::after{
     content: '';
     position: absolute;
     width: 100%;
@@ -320,7 +327,7 @@ footer{
     transition: transform 0.5s ease-out;
 }
 
-.header-list2 li:hover::after{
+.header-list li:hover::after{
     transform: scaleX(1);
     transform-origin: bottom left;
 }
@@ -441,6 +448,11 @@ a{
 .bb {
     border-bottom: #bebebe 1px solid;
     color: #777;
+}
+
+.bd {
+    border-top: #bebebe 1px solid;
+    /* color: #777; */
 }
 
 .p1{
@@ -854,4 +866,24 @@ a{
 
 #Layer_4 {
     width: 100%;
+}
+
+.passanger-block{
+    margin: 0 50px;
+}
+
+.row1{
+    margin-bottom: 10px;
+}
+
+
+
+.card2{
+    margin: 0 100px;
+}
+
+
+
+.bum{
+    margin: 0 20px;
 }

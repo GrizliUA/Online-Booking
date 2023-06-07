@@ -2,12 +2,10 @@
 
 {% block content %}
 
-    {%include "blocks/ticket_block.html" %}
-    
-    {%include "blocks/tablo_block.html" %}
+{% include "blocks/ticket.html" %}
+{% include "blocks/other.html" %}
+{% include "blocks/mobile.html" %}
+{% include "blocks/popular.html" %}
+<!-- {% include "blocks/questions.html" %} -->
 
-    {%include "blocks/mobile_block.html" %}
-
-    {%include "blocks/directions_block.html" %}
-    
 {% endblock %}

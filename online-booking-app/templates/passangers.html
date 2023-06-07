@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="block">
+    <div class="h">
+        <h1 class="">Інформація про пасажирів</h1>
+    </div>
+    <div class="pass-blocks">
+        <form action="{{ url_for('redirect_to_payment_page') }}" class="form-ticket">
+            <div class="passanger-block">
+                <!-- якщо пасажирів багато, то дублювати цей блок -->
+                <div>
+                    <h3>Пасажир 1</h3>
+                    <div class="row1 inp">
+                        <div class="item">
+                            <div class="input-div some input-div2">
+                                <input type="text" name="full-name" placeholder="Повне ім'я" id="without-arrow" required>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="input-div some input-div2">
+                                <input type="text" name="phone" placeholder="Мобільний телефон" id="without-arrow" required>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="input-div some input-div2">
+                                <input type="text" name="email" placeholder="Електронна адреса" id="without-arrow" required>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="input-div some name input-div2">
+                                <input type="text" name="class" list="class" placeholder="Клас" id="without-arrow" required>
+                                <datalist id="class">
+                                    <!-- {% for class in classes %}
+                                    <option value="{{ class.cllass_ID }}">{{ class.classs }}</option>
+                                    {% endfor %} -->
+                                    <option value="econom">Економ</option>
+                                    <option value="lux">Люкс</option>
+                                    <option value="mid">Середній</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row2 inp">
+                        <div class="item">
+                            <div class="input-div some input-div3">
+                                <input type="text" name="seat-letter" placeholder="Крісло" id="without-arrow" required>
+                                <input type="text" name="seat-number" placeholder="Крісло" id="without-arrow" required>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="some name input-div2">
+                                <input type="text" id="birthday" class="datediv" placeholder="День народження" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="input-div some name input-div2">
+                                <input type="text" name="country" list="countries" placeholder="Країна" id="without-arrow" required>
+                                <datalist id="countries">
+                                    {% for country in countries %}
+                                    <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="input-div some name input-div2">
+                                <input type="text" name="sex" list="sexes" placeholder="Стать" id="without-arrow" required>
+                                <datalist id="sexes">
+                                    {% for sex in sexes %}
+                                    <option value="{{ sex.sex_ID }}">{{ sex.sex }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Підтвердити</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

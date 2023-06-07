@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="block">
+    <div class="h">
+        <h1 class="">Оплата квитків</h1>
+        <form action="{{ url_for('redirect_to_finish_page') }}" class="form-ticket">
+            <div class="card2 inp">
+            
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="text" name="card-number" placeholder="Номер картки" maxlength="16" id="without-arrow" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="text" name="expiraation-date" placeholder="Місяць/Рік" maxlength="5" id="without-arrow" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="text" name="CVV" placeholder="CVV" maxlength="3" id="without-arrow" required>
+                    </div>
+                </div>
+                <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Підтвердити</button>
+
+            </div>
+        </form>
+            
+    </div>
+</main>
+{% endblock %}
