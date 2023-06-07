@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <main class="ticket-block">
+        <div class="h">
+            <h1 class="">Підбір авіаквитків</h1>
+            <!-- <h3>авіаквитки</h3> -->
+        </div>
+        <div class="form-div">
+            <form action="{{ url_for('redirect_to_other_page') }}" class="form-ticket">
+                
+                <div class="info-form">
+                    <div class="some info from "></div>
+                    <div class="some info to"></div>
+                    <!-- <div class="some info plane-model"></div> -->
+                    <div class="some info boarding-time"></div>
+                    <div class="some info departure-time"></div>
+                    <div class="some info arrival-time"></div>
+                    <div class="some info passangers"></div>
+                    <div class="some info company"></div>
+                    <div class="some info base-price"></div>
+                    <!-- <div class="some info accordion"></div> -->
+                    <div class="some accordion_element">
+                        <button class="sub-btn info-btn">Купити</button>
+                    </div>
+                    
+                </div>
+                
+                
+            </form>
+        </div>
+    </main>
+{% endblock %}
