@@ -4,6 +4,7 @@ from urllib.request import urlopen
 from flask_mysqldb import MySQL
 from flask import Flask, render_template, request, redirect, make_response, jsonify, url_for
 from flask_restful import Resource, Api
+from sqlalchemy.orm import aliased
 from models.models import *
 from database_details import Database_dt
 
@@ -35,13 +36,13 @@ def response_404(response='Not Found'):
     """Returns response with code 404"""
     return make_response(response,404)
 
-# @app.route('/' , methods=['GET'])
-# def error():
-#     """Error page function"""
-#     try:
-#         return render_template('error.html')
-#     except:
-#         return response_400()
+@app.route('/error' , methods=['GET'])
+def error():
+    """Error page function"""
+    try:
+        return render_template('error.html')
+    except:
+        return response_400()
 
 
 
@@ -84,6 +85,7 @@ def obj_to_json(obj) -> str:
 #     return redirect(url_for('other_page'))
 
 
+
 class Cities_Api(Resource):
     def get(self):
         try:
@@ -104,11 +106,96 @@ def main():
         dict_cities = json.loads(res)
         print(dict_cities)
 
-        return render_template('test.html', cities = dict_cities)
-        #return response_200(dict_res)
+        return render_template('main.html', cities = dict_cities)
     except:
-        return response_400()
-        #return redirect("http://127.0.0.1:5000/error")
+        return redirect("http://127.0.0.1:5000/error")
+    
+@app.route('/tickets' , methods=['GET'])
+def tickets():
+    """Main page function"""
+    try:
+        tickets =   [
+                        {
+                            "arrival_Time": "Wed, 07 Jun 2023 19:33:18 GMT",
+                            "base_Price": 100,
+                            "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
+                            "departure_Time": "Wed, 07 Jun 2023 18:33:18 GMT",
+                            "flights_ID": 1,
+                            "from_ID_FK": 1,
+                            "gate": "Gate 1",
+                            "plane_ID_FK": 1,
+                            "to_ID_FK": 2
+                        },
+                        {
+                            "arrival_Time": "Wed, 07 Jun 2023 21:33:18 GMT",
+                            "base_Price": 200,
+                            "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
+                            "departure_Time": "Wed, 07 Jun 2023 20:33:18 GMT",
+                            "flights_ID": 2,
+                            "from_ID_FK": 2,
+                            "gate": "Gate 2",
+                            "plane_ID_FK": 2,
+                            "to_ID_FK": 3
+                        }
+                    ]
+        return render_template('ticket_selection.html', tickets = tickets)
+    except:
+        return redirect("http://127.0.0.1:5000/error")
+
+
+
+class ApiSearch(Resource):
+    def post(self):
+        try:
+            # data = []
+            # for key, value in request.args.items():
+            #         print(key, value)
+            #         data.append({key: value})
+            # if data == []:
+            #     return response_400()
+            
+            # data = ''
+            
+            # for key, value in request.args.items():
+            #     data += f'{key} = "{value}", '
+            # data = data
+
+            # if data == '':
+            #     return response_400()
+
+            from_ID_FK = request.args['from_ID_FK']
+
+            to_ID_FK = request.args['to_ID_FK']
+
+            date = request.args['boarding_Time']
+
+
+            try:
+                direct_flights = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=date).all())
+            except:
+                direct_flights = []
+
+
+            flights_alias = aliased(Flights)
+            transfered_flights = obj_to_json(
+                db.session.query(Flights)
+                .select_from(Flights)
+                .join(flights_alias, Flights.to_ID_FK == flights_alias.from_ID_FK)
+                .filter(Flights.boarding_Time >= date)
+                .all()
+            )
+
+            transfered_flights = [entry for entry in transfered_flights if entry['from_ID_FK'] != int(to_ID_FK) and entry['to_ID_FK'] != int(from_ID_FK)]
+
+            if direct_flights and transfered_flights:
+                return response_404()
+
+            return response_200((direct_flights,transfered_flights))
+        except:
+            return response_400()
+api.add_resource(ApiSearch, '/search')
+
+
 
 
 # class Api(Resource):
@@ -477,6 +564,14 @@ def main():
 #             return response_400()
 # api.add_resource(ApiItemSearch, '/api/item/search/')
 
+
+@app.route('/error_page')
+def error_page():
+    return render_template('error.html')
+
+@app.route('/redirect_to_error_page')
+def redirect_to_error_page():
+    return redirect(url_for('error_page'))
 
 
 if __name__ == "__main__":

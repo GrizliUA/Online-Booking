@@ -3,11 +3,11 @@
         <h1 class="">Пошук авіаквитків</h1>
     </div>
     <div class="form-div">
-        <form action="" class="form-ticket">
+        <form action="http://127.0.0.1:5000/tickets" class="form-ticket">
             <div class="inp">
                 <div class="item">
                     <div class="input-div some">
-                        <input type="text" name="start-city" list="start-city" placeholder="Звідки" id="without-arrow" required>
+                        <input type="text" name="start-city" list="start-city" placeholder="Звідки" id="without-arrow" value="1" required>
                         <datalist id="start-city"> 
                             {% for city in cities %}
                             <option value="{{city.city_ID}}">{{city.country}}</option>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="item">
                     <div class="input-div some name">
-                        <input type="text" name="end-city" list="end-city" placeholder="Куди" id="without-arrow" required>
+                        <input type="text" name="end-city" list="end-city" placeholder="Куди" id="without-arrow" value="2" required>
                         <datalist id="end-city">
                             {% for city in cities %}
                             <option value="{{ city.city_ID }}">{{ city.country }}</option>
@@ -27,18 +27,18 @@
                 </div>
                 <div class="item">
                     <div class="some name">
-                        <input type="text" id="there" class="datediv" placeholder="Туди (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                        <input type="date" id="there" class="datediv" placeholder="Туди (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" value="2022-02-24" required>
                     </div>
                 </div>
                 <div class="item">
                     <div class="some name">
-                        <input type="text" id="back" class="datediv" placeholder="Назад (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                        <input type="date" id="back" class="datediv" placeholder="Назад (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" readonly>
                         
                     </div>
                 </div>
                 <div class="item">
                     <div class="some name">
-                        <input type="number" id="number-of-passengers" class="datediv" placeholder="Пасажири" required>
+                        <input type="number" id="number-of-passengers" class="datediv" placeholder="Пасажири" value="1" required>
                     </div>
                 </div>
             </div>
