@@ -27,7 +27,7 @@ db.session.commit()
 flights_data = [
     {
         'plane_ID_FK': 1,
-        'from_ID_PK': 1,
+        'from_ID_FK': 1,
         'to_ID_FK': 2,
         'boarding_Time': dt.datetime.now(),
         'departure_Time': dt.datetime.now() + dt.timedelta(hours=1),
@@ -37,7 +37,7 @@ flights_data = [
     },
     {
         'plane_ID_FK': 2,
-        'from_ID_PK': 2,
+        'from_ID_FK': 2,
         'to_ID_FK': 3,
         'boarding_Time': dt.datetime.now(),
         'departure_Time': dt.datetime.now() + dt.timedelta(hours=3),
@@ -47,7 +47,7 @@ flights_data = [
     },
     {
         'plane_ID_FK': 3,
-        'from_ID_PK': 3,
+        'from_ID_FK': 3,
         'to_ID_FK': 1,
         'boarding_Time': dt.datetime.now(),
         'departure_Time': dt.datetime.now() + dt.timedelta(hours=5),

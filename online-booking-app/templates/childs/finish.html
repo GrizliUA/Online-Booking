@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="block tablo">
+    {{passenger_info}}
+    <h1>Ваші квитки :)</h1>
+    <div class="schedule">
+        <div class="div-tablo bum">
+                <h3>Квиток</h3>
+                <ul class="tablo-list">
+                    <li class="li-tablo bd">
+                        <p class="t1">Компанія<br>{{choiced_ticket.plane_ID_FK}}</p>
+                        <p class="t4">Номер пасажира<br>PS 0049211</p>
+                    </li>
+                    <li class="li-tablo">
+                        <p class="t1">Ім'я пасажира<br>{{passenger_info.full_name}}</p>
+                        <p class="t2">Номер рейсу<br>{{choiced_ticket.flights_ID}}</p>
+                        <p class="t4">Звідки/Куди<br>{{choiced_ticket.from_ID_FK}}<br>{{choiced_ticket.to_ID_FK}}</p>
+                    </li>
+                    <li class="li-tablo">
+                        <p class="t4">Посадка<br>{{choiced_ticket.boarding_Time}}</p>
+                        <p class="t4">Відправлення<br>{{choiced_ticket.departure_Time}}</p>
+                        <p class="t4">Прибуття<br>{{choiced_ticket.arrival_Time}}</p>
+                    </li>
+                    <li class="li-tablo">
+                        <p class="t1">Місце<br>{{passenger_info.seat_row}}{{passenger_info.seat_column}}</p>
+                        <p class="t2">Клас<br>{{passenger_info.selected_class}}</p>
+                        <p class="t4">Ворота<br>{{choiced_ticket.gate}}</p>
+                        <p class="t4">Стать<br>{{passenger_info.sex}}</p>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

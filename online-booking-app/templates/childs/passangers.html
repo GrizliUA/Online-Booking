@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="block">
+    <div class="h">
+        <h1 class="">Інформація про пасажирів</h1>
+    </div>
+    <div class="pass-blocks">
+        <form action="{{ url_for('payment', choiced_ticket = choiced_ticket, passengers_count=passengers_count) }}" method="POST" class="form-ticket"">
+            <div class="passanger-block">
+                {% for passenger in range(passengers_count) %}
+                    <div>
+                        <h3>Пасажир {{passenger + 1}}</h3>
+                        <div class="row1 inp">
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="full_name" placeholder="Повне ім'я" id="full_name" value="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="phone" placeholder="Мобільний телефон" id="phone" value="+1234567890" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="email" placeholder="Електронна адреса" id="email" value="johndoe@example.com" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name" name="class" id="class">
+                                        <option value="Eco">Економ</option>
+                                        <option value="Standart">Звичайний</option>
+                                        <option value="First class">Перший Клас</option>
+                                        <option value="Business class">Бізнес Клас</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row2 inp">
+                            <div class="item">
+                                <div class="input-div some input-div3">
+                                    <select class="input-div some name" name="seat_row" id="seat_row">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    <select class="input-div some name" name="seat_column" id="seat_column">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="some name input-div2">
+                                    <input type="text" name="birthday" id="birthday" class="datediv" placeholder="День народження" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" value="2000-01-01" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name input-div2" name="country" id="country">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="UK">Велика Британія</option>
+                                        <option value="UA">Україна</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name input-div2" name="sex" id="sex">
+                                        <option value="Female">Жінка</option>
+                                        <option value="Male">Чоловік</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Підтвердити</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

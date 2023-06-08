@@ -1,12 +1,13 @@
 """Modules providing Flask realising hosting web-application at local instance"""
 import json
+from urllib.parse import urlencode
 from urllib.request import urlopen
-from flask_mysqldb import MySQL
 from flask import Flask, render_template, request, redirect, make_response, jsonify, url_for
 from flask_restful import Resource, Api
 from sqlalchemy.orm import aliased
 from models.models import *
 from database_details import Database_dt
+from datetime import datetime
 
 app = Flask(__name__)
 api = Api(app)
@@ -46,18 +47,19 @@ def error():
 
 
 
-# def obj_to_list(obj) -> list:
-#     new_list = []
-#     for row in obj:
-#         new_list.append(list((getattr(row, col)) for col in row.__table__.columns.keys()))
-#     return new_list 
+def obj_to_list(obj) -> list:
+    new_list = []
+    for row in obj:
+        new_list.append(list((getattr(row, col)) for col in row.__table__.columns.keys()))
+    return new_list
+
 
 def obj_to_json(obj) -> str:
     new_list = []
     for row in obj:
         row_dict = {col: getattr(row, col) for col in row.__table__.columns.keys()}
         new_list.append(row_dict)
-    return json.dumps(new_list)
+    return new_list
 
 # @app.route('/' , methods=['GET'])
 # def main():
@@ -96,7 +98,7 @@ class Cities_Api(Resource):
 api.add_resource(Cities_Api, '/cities')
 
 
-@app.route('/' , methods=['GET'])
+@app.route('/' , methods=['GET', 'POST'])
 def main():
     """Main page function"""
     try:
@@ -104,98 +106,330 @@ def main():
         with urlopen(url) as req:
             res = req.read()
         dict_cities = json.loads(res)
-        print(dict_cities)
+        #print(dict_cities)
 
-        return render_template('main.html', cities = dict_cities)
+        return render_template('childs/ticket.html', cities = dict_cities)
     except:
         return redirect("http://127.0.0.1:5000/error")
     
-@app.route('/tickets' , methods=['GET'])
+@app.route('/tickets' , methods=['GET', 'POST'])
 def tickets():
     """Main page function"""
     try:
-        tickets =   [
-                        {
-                            "arrival_Time": "Wed, 07 Jun 2023 19:33:18 GMT",
-                            "base_Price": 100,
-                            "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
-                            "departure_Time": "Wed, 07 Jun 2023 18:33:18 GMT",
-                            "flights_ID": 1,
-                            "from_ID_FK": 1,
-                            "gate": "Gate 1",
-                            "plane_ID_FK": 1,
-                            "to_ID_FK": 2
-                        },
-                        {
-                            "arrival_Time": "Wed, 07 Jun 2023 21:33:18 GMT",
-                            "base_Price": 200,
-                            "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
-                            "departure_Time": "Wed, 07 Jun 2023 20:33:18 GMT",
-                            "flights_ID": 2,
-                            "from_ID_FK": 2,
-                            "gate": "Gate 2",
-                            "plane_ID_FK": 2,
-                            "to_ID_FK": 3
-                        }
-                    ]
-        return render_template('ticket_selection.html', tickets = tickets)
+        from_ID_FK = request.args['from_ID_FK']
+        to_ID_FK = request.args['to_ID_FK']
+        boarding_Time = request.args['date']
+        #passengers_count = int(request.args["passengers_count"])
+        passengers_count = int(request.args.get('passengers_count'))
+        # print(from_ID_FK)
+        # print(to_ID_FK)
+        # print(boarding_Time)
+
+        url_req = urlencode({"from_ID_FK": from_ID_FK, "to_ID_FK": to_ID_FK, "boarding_Time": boarding_Time})
+        #print(url_req)
+        url = "http://127.0.0.1:5000/search?" + url_req
+        #print(url)
+
+        with urlopen(url) as req:
+            res = req.read()
+        direct_ticket = json.loads(res)
+        #print(direct_ticket2)
+
+
+
+        #print(passengers_count)
+        #direct_ticket = 
+        # direct_ticket = [
+        #                 {
+        #                     "arrival_Time": "Wed, 07 Jun 2023 21:33:18 GMT",
+        #                     "base_Price": 200,
+        #                     "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
+        #                     "departure_Time": "Wed, 07 Jun 2023 20:33:18 GMT",
+        #                     "flights_ID": 2,
+        #                     "from_ID_FK": 1,
+        #                     "gate": "Gate 2",
+        #                     "plane_ID_FK": 2,
+        #                     "to_ID_FK": 3
+        #                 }
+        # ]
+        # undirect_tickets =   [
+        #                 {
+        #                     "arrival_Time": "Wed, 07 Jun 2023 19:33:18 GMT",
+        #                     "base_Price": 100,
+        #                     "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
+        #                     "departure_Time": "Wed, 07 Jun 2023 18:33:18 GMT",
+        #                     "flights_ID": 1,
+        #                     "from_ID_FK": 1,
+        #                     "gate": "Gate 1",
+        #                     "plane_ID_FK": 1,
+        #                     "to_ID_FK": 2
+        #                 },
+        #                 {
+        #                     "arrival_Time": "Wed, 07 Jun 2023 21:33:18 GMT",
+        #                     "base_Price": 200,
+        #                     "boarding_Time": "Wed, 07 Jun 2023 17:33:18 GMT",
+        #                     "departure_Time": "Wed, 07 Jun 2023 20:33:18 GMT",
+        #                     "flights_ID": 2,
+        #                     "from_ID_FK": 2,
+        #                     "gate": "Gate 2",
+        #                     "plane_ID_FK": 2,
+        #                     "to_ID_FK": 3
+        #                 }
+        #             ]
+        return render_template('childs/tickets.html', direct_ticket = direct_ticket, undirect_tickets = [], passengers_count = passengers_count)
     except:
         return redirect("http://127.0.0.1:5000/error")
+    
+@app.route('/passangers' , methods=['GET', 'POST'])
+def passangers():
+    """Main page function"""
+    #try:
+    tickets_info = []
+    direct_ticket = request.args.get('direct_ticket')
+    undirect_tickets = request.args.get('undirect_tickets')
+    passengers_count = int(request.args.get('passengers_count'))
+    # print(direct_ticket)
+    # print(undirect_tickets)
+    # print(passengers_count)
+    if direct_ticket == None:
+        return render_template('childs/passangers.html', choiced_ticket = undirect_tickets, passengers_count = passengers_count)
+    elif undirect_tickets == None:
+        return render_template('childs/passangers.html', choiced_ticket = direct_ticket, passengers_count = passengers_count)
+    else:
+        return redirect("http://127.0.0.1:5000/error")
+    #except:
+        #return redirect("http://127.0.0.1:5000/error")
 
+@app.route('/payment' , methods=['GET', 'POST'])
+def payment():
+    """Main page function"""
+    #try:
+    choiced_ticket = request.args.get('choiced_ticket')
+    payment_info = []
+    passenger_info = {
+        'full_name': request.form['full_name'],
+        'phone': request.form['phone'],
+        'email': request.form['email'],
+        'selected_class': request.form['class'],
+        'seat_row': request.form['seat_row'],
+        'seat_column': request.form['seat_column'],
+        'birthday': request.form['birthday'],
+        'country': request.form['country'],
+        'sex': request.form['sex']
+    }
+    #passengers_data = request.form.get('passengersData')
+    
+    
+
+    return render_template('childs/payment.html', choiced_ticket = choiced_ticket, passenger_info = passenger_info, payment = payment_info)
+    #except:
+        #return redirect("http://127.0.0.1:5000/error")
+    
+@app.route('/finish' , methods=['GET', 'POST'])
+def finish():
+    """Main page function"""
+    #try:
+    choiced_ticket = request.args.get('choiced_ticket')
+    payment_info = []
+    passenger_info = request.args.get('passenger_info')
+    # card_number = int(request.form['card_number'].replace('-',''))
+    # card_expiration_date = request.form['card_expiration_date']
+    # card_cvv = int(request.form['card_cvv'])
+    # print(card_number)
+    # print(card_expiration_date)
+    # print(card_cvv)
+    # print(type(choiced_ticket))
+    # print(choiced_ticket.replace("'",'"'))
+    # print(type(passenger_info))
+    # print(passenger_info.replace("'",'"'))
+
+    return render_template('childs/finish.html', choiced_ticket = json.loads(choiced_ticket.replace("'",'"')), passenger_info = json.loads(passenger_info.replace("'",'"')), payment = payment_info)
+    #except:
+        #return redirect("http://127.0.0.1:5000/error")
+
+# class ApiSearch(Resource):
+#     def post(self):
+#         #try:
+#         # data = []
+#         # for key, value in request.args.items():
+#         #         print(key, value)
+#         #         data.append({key: value})
+#         # if data == []:
+#         #     return response_400()
+        
+#         # data = ''
+        
+#         # for key, value in request.args.items():
+#         #     data += f'{key} = "{value}", '
+#         # data = data
+
+#         # if data == '':
+#         #     return response_400()
+        
+#         #print(data)
+
+#         #from_ID_FK = request.args['departure_city']
+#         from_ID_FK = request.args['from_ID_FK']
+
+#         #to_ID_FK = request.args['arrival_city']
+#         to_ID_FK = request.args['to_ID_FK']
+
+#         print(type(from_ID_FK), type(to_ID_FK))
+
+#         # 2023-06-07
+#         date = request.args['boarding_Time']
+#         # print(date)
+#         # boarding_Time_start = date
+#         # boarding_Time_end = date
+#         # data = obj_to_json(Flights.query.filter_by(**eval('dict(' + data + ')')).all())
+#         # flights = Flights.query.all()
+
+#         #print(data)
+
+#         data = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=date).all())
+#         # direct_flights = [
+#         #     flight for flight in data 
+#         #     if flight['from_ID_FK'] == from_ID_FK 
+#         #     and flight['to_ID_FK'] == to_ID_FK 
+#         #     and flight['boarding_Time'] == date
+#         # ]
+#         # if data == []:
+#         #     flights_alias = aliased(Flights)
+#         #     data = obj_to_json(
+#         #         db.session.query(Flights)
+#         #         .select_from(Flights)
+#         #         .join(flights_alias, Flights.to_ID_FK == flights_alias.from_ID_FK)
+#         #         .filter(Flights.boarding_Time >= date)
+#         #         .all()
+#         #     )
+#         #     transfer_flights = find_transfer_flights(data)
+#         #     data = [entry[0] for entry in transfer_flights]
+
+#         #     data = [entry for entry in data if int(entry['from_ID_FK']) != int(to_ID_FK) and int(entry['to_ID_FK']) != int(from_ID_FK)]
+#         #     return response_404(data)
+
+#         return response_200(data)
+#         #except:
+#             #return response_400()
+# api.add_resource(ApiSearch, '/search')
 
 
 class ApiSearch(Resource):
-    def post(self):
-        try:
-            # data = []
-            # for key, value in request.args.items():
-            #         print(key, value)
-            #         data.append({key: value})
-            # if data == []:
-            #     return response_400()
-            
-            # data = ''
-            
-            # for key, value in request.args.items():
-            #     data += f'{key} = "{value}", '
-            # data = data
+    def get(self):
+        from_ID_FK = request.args['from_ID_FK']
+        to_ID_FK = request.args['to_ID_FK']
+        boarding_Time = request.args['boarding_Time']
+        data = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=boarding_Time).all())
 
-            # if data == '':
-            #     return response_400()
-
-            from_ID_FK = request.args['from_ID_FK']
-
-            to_ID_FK = request.args['to_ID_FK']
-
-            date = request.args['boarding_Time']
-
-
-            try:
-                direct_flights = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=date).all())
-            except:
-                direct_flights = []
-
-
+        if data == []:
             flights_alias = aliased(Flights)
-            transfered_flights = obj_to_json(
+            data = obj_to_json(
                 db.session.query(Flights)
                 .select_from(Flights)
                 .join(flights_alias, Flights.to_ID_FK == flights_alias.from_ID_FK)
-                .filter(Flights.boarding_Time >= date)
+                .filter(Flights.boarding_Time >= boarding_Time)
                 .all()
             )
+            transfer_flights = find_transfer_flights(data)
+            data = [entry[0] for entry in transfer_flights]
 
-            transfered_flights = [entry for entry in transfered_flights if entry['from_ID_FK'] != int(to_ID_FK) and entry['to_ID_FK'] != int(from_ID_FK)]
-
-            if direct_flights and transfered_flights:
-                return response_404()
-
-            return response_200((direct_flights,transfered_flights))
-        except:
-            return response_400()
+            data = [entry for entry in data if int(entry['from_ID_FK']) != int(to_ID_FK) and int(entry['to_ID_FK']) != int(from_ID_FK)]
+            return response_200(data)
+        
+        return response_200(data)
 api.add_resource(ApiSearch, '/search')
 
+def find_transfer_flights(flights):
+    transfer_flights = []
+    
+    for i in range(len(flights) - 1):
+        current_flight = flights[i]
+        next_flight = flights[i+1]
+        
+        if current_flight['to_ID_FK'] == next_flight['from_ID_FK'] and \
+                current_flight['departure_Time'] < next_flight['arrival_Time']:
+            
+            transfer_flights.append((current_flight, next_flight))
+    
+    return transfer_flights
 
+
+
+
+
+
+
+
+# class ApiSearch(Resource):
+#     def post(self):
+#         try:
+#             from_ID_FK = request.args['from_ID_FK']
+#             to_ID_FK = request.args['to_ID_FK']
+#             boarding_Time = request.args['boarding_Time']
+#             #direct_flights = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=boarding_Time).all())
+            
+#             direct_flights = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=boarding_Time).all())
+#             direct_flights = [
+#                 flight for flight in direct_flights 
+#                 if flight['from_ID_FK'] == from_ID_FK 
+#                 and flight['to_ID_FK'] == to_ID_FK 
+#                 and flight['boarding_Time'] == boarding_Time
+#             ]
+#             # if data == []:
+#             #     flights_alias = aliased(Flights)
+#             #     data = obj_to_json(
+#             #         db.session.query(Flights)
+#             #         .select_from(Flights)
+#             #         .join(flights_alias, Flights.to_ID_FK == flights_alias.from_ID_FK)
+#             #         .filter(Flights.boarding_Time >= boarding_Time)
+#             #         .all()
+#             #     )
+#             #     transfer_flights = find_transfer_flights(data)
+#             #     data = [entry[0] for entry in transfer_flights]
+
+#             #     data = [entry for entry in data if int(entry['from_ID_FK']) != int(to_ID_FK) and int(entry['to_ID_FK']) != int(from_ID_FK)]
+#             #     return response_404(data)
+            
+            
+            
+#             return response_200(direct_flights)
+#         except:
+#             return response_400()
+# api.add_resource(ApiSearch, '/search')
+
+# class ApiSearch(Resource):
+#     def post(self):
+        
+#         # data = ''
+        
+#         # for key, value in request.args.items():
+#         #     data += f'{key} = "{value}", '
+#         # data = data
+#         # print(data)
+#         # if data == '':
+#         #     return response_400()
+        
+#         from_ID_FK = request.args['from_ID_FK']
+#         to_ID_FK = request.args['to_ID_FK']
+#         date = request.args['boarding_Time']
+#         print(date)
+#         data = obj_to_json(Flights.query.filter_by(from_ID_FK=from_ID_FK, to_ID_FK=to_ID_FK, boarding_Time=date).all())
+#         print(data)
+#         if data == []:
+#             flights_alias = aliased(Flights)
+#             data = obj_to_json(
+#                 db.session.query(Flights)
+#                 .select_from(Flights)
+#                 .join(flights_alias, Flights.to_ID_FK == flights_alias.from_ID_FK)
+#                 .filter(Flights.boarding_Time >= date)
+#                 .all()
+#             )
+
+
+#             data = [entry for entry in data if entry['from_ID_FK'] != int(to_ID_FK) and entry['to_ID_FK'] != int(from_ID_FK)]
+
+#         return response_200(data)
+# api.add_resource(ApiSearch, '/search')
 
 
 # class Api(Resource):

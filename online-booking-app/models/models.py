@@ -37,7 +37,7 @@ class Flights(db.Model):
     __tablename__ = 'flights'
     flights_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     plane_ID_FK = db.Column(db.Integer, db.ForeignKey('plane.plane_ID', ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    from_ID_PK = db.Column(db.Integer, nullable=False)
+    from_ID_FK = db.Column(db.Integer, nullable=False)
     to_ID_FK = db.Column(db.Integer, nullable=False)
     boarding_Time = db.Column(db.DateTime, nullable=False)
     departure_Time = db.Column(db.DateTime, nullable=False)

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="ticket-block">
+    <div class="h">
+        <h1 class="">Пошук авіаквитків</h1>
+    </div>
+    <div class="form-div">
+        <form action="{{ url_for('tickets', passengers_count=passengers_count) }}" class="form-ticket">
+            <div class="inp">
+                <div class="item">
+                    <div class="input-div some name">
+                        <select class="input-div some name" name="from_ID_FK" id="from_ID_FK">
+                            {% for city in cities %}
+                            <option value="{{city.city_ID}}">{{city.country}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some name">
+                        <div class="input-div some name">
+                            <select class="input-div some name" name="to_ID_FK" id="to_ID_FK">
+                                {% for city in cities %}
+                                <option value="{{city.city_ID}}">{{city.country}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="date" name="date" class="datediv" placeholder="Туди (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" value="2022-02-24" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="date" name="back" class="datediv" placeholder="Назад (дата)" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" readonly>
+                        
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="some name">
+                        <input type="number" name="passengers_count" class="datediv" min="0" max="24" value="1" readonly>
+                    </div>
+                </div>
+            </div>
+            <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Знайти</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

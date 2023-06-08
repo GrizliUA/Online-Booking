@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="block">
+    <div class="h">
+        <h1 class="">Оплата квитків</h1>
+        <form action="{{ url_for('finish', choiced_ticket = choiced_ticket, passenger_info=passenger_info)}}" method="POST" class="form-ticket">
+            <div class="card2 inp">
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="text" name="card_number" placeholder="Номер картки" minlength="19" maxlength="19" id="card_number" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="date" name="card_expiration_date" placeholder="Місяць/Рік" maxlength="5" id="card_expiration_date" required>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="input-div some input-div2">
+                        <input type="text" name="card_cvv" placeholder="CVV" minlength="3" maxlength="3" id="card_cvv" required>
+                    </div>
+                </div>
+                <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Підтвердити</button>
+            </div>
+        </form>
+            
+    </div>
+</main>
+<script>
+    const cardNumberInput = document.querySelector('input[name="card_number"]');
+
+    cardNumberInput.addEventListener('input', function (event) {
+        const input = event.target;
+        const trimmedValue = input.value.replace(/-/g, '').substr(0, 16);
+        const groups = trimmedValue.match(/.{1,4}/g);
+        const formattedValue = groups ? groups.join('-') : '';
+
+        input.value = formattedValue;
+    });
+</script>
+{% endblock %}

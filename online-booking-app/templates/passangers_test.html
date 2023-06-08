@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="block">
+    <div class="h">
+        <h1 class="">Інформація про пасажирів</h1>
+    </div>
+    <div class="pass-blocks">
+        <!-- <form action="http://127.0.0.1:5000/payment" method="POST" class="form-ticket" onsubmit="savePassengerData(event)"> -->
+        <form action="{{ url_for('payment', choiced_ticket = choiced_ticket, passengers_count=passengers_count) }}" method="POST" class="form-ticket"">
+            <div class="passanger-block">
+                {% for passenger in range(passengers_count) %}
+                    <div>
+                        <h3>Пасажир {{passenger + 1}}</h3>
+                        <div class="row1 inp">
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="full-name{{ passenger }}" placeholder="Повне ім'я" id="full-name{{ passenger }}" value="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="phone{{ passenger }}" placeholder="Мобільний телефон" id="phone{{ passenger }}" value="+1234567890" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some input-div2">
+                                    <input type="text" name="email{{ passenger }}" placeholder="Електронна адреса" id="email{{ passenger }}" value="johndoe@example.com" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name" name="class{{ passenger }}" id="class{{ passenger }}">
+                                        <option value="econom">Економ</option>
+                                        <option value="standart">Звичайний</option>
+                                        <option value="first_class">Перший Клас</option>
+                                        <option value="business_class">Бізнес Клас</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row2 inp">
+                            <div class="item">
+                                <div class="input-div some input-div3">
+                                    <select class="input-div some name" name="seat-row{{ passenger }}" id="seat-row{{ passenger }}">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                    <select class="input-div some name" name="seat-column{{ passenger }}" id="seat-column{{ passenger }}">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="0">A</option>
+                                        <option value="1">B</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="some name input-div2">
+                                    <input type="text" id="birthday{{ passenger }}" class="datediv" placeholder="День народження" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" value="2000-01-01" required>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name input-div2" name="country{{ passenger }}" id="country{{ passenger }}">
+                                        <!-- {% for country in countries %}
+                                        <option value="{{ country.country_ID }}">{{ country.country }}</option>
+                                        {% endfor %} -->
+                                        <option value="0">Велика Британія</option>
+                                        <option value="1">Україна</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="input-div some name input-div2">
+                                    <select class="input-div some name input-div2" name="sex{{ passenger }}" id="sex{{ passenger }}">
+                                        <option value="0">Жінка</option>
+                                        <option value="1">Чоловік</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <button class="accordion ticket-butt accordion_element sub-btn" type="submit" id="submitButton" value="Submit">Підтвердити</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+<!-- <script>
+    function savePassengerData(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        var passengersData = []; // Array to store passenger data
+
+        // Loop through each passenger block
+        var passengerBlocks = document.getElementsByClassName("passanger-block");
+        for (var i = 0; i < passengerBlocks.length; i++) {
+            var passengerData = {};
+
+            // Retrieve and store passenger data in an object
+            passengerData.fullName = passengerBlocks[i].querySelector("input[name='full-name']").value;
+            passengerData.phone = passengerBlocks[i].querySelector("input[name='phone']").value;
+            passengerData.email = passengerBlocks[i].querySelector("input[name='email']").value;
+            // Add more fields as needed
+
+            // Add the passenger object to the passengersData array
+            passengersData.push(passengerData);
+        }
+
+        // Convert passengersData array to a JSON string
+        var passengersDataString = JSON.stringify(passengersData);
+
+        // Assign the JSON string to the hidden input field
+        document.getElementById("passengersData").value = passengersDataString;
+
+        // Submit the form
+        event.target.submit();
+    }
+</script> -->

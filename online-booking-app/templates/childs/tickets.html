@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="ticket-block">
+    <div class="h">
+        <h1 class="">Підбір авіаквитків</h1>
+    </div>
+    <div class="form-div">
+        <form action="{{ url_for('passangers', direct_ticket = direct_ticket, undirect_tickets = [], passengers_count = passengers_count) }}" method="POST" class="form-ticket">
+            <div class="info-block">
+                
+                    <div class="form-block">
+                        <!-- div class="info-form" можна ставити скільки завгодно в залежності від кількості квитків -->
+                        <div class="info-form">
+                            <!-- Лого авіакомпанії -->
+                            <div class="company-photo"><img src="/static/images/company_logo/AA.svg" alt=""><p class="company-name">{{direct_ticket.0.plane_ID_FK}}</p></div>
+                            <div class="time-date">
+                                <!-- Час відправлення та час прибуття -->
+                                <p>{{direct_ticket.0.departure_Time[17:19]|int}}{{direct_ticket.0.departure_Time[19:22]}} - {{direct_ticket.0.arrival_Time[17:19]|int}}{{direct_ticket.0.departure_Time[19:22]}}</p>
+                                <!-- Тривалість польоту -->
+                                <p>{{direct_ticket.0.arrival_Time[17:19]|int - direct_ticket.0.departure_Time[17:19]|int}}г {{direct_ticket.0.arrival_Time[20:22]|int - direct_ticket.0.departure_Time[20:22]|int}}хв тривалість</p>
+                            </div>
+                            <div class="directions-other">
+                                <!-- Звідки куди -->
+                                <div><p>{{direct_ticket.0.from_ID_FK}} - {{direct_ticket.0.to_ID_FK}}</p></div>
+                                <div class="last-child2">
+                                    <!-- Дата -->
+                                    <div class="date-other"><p>{{direct_ticket.0.arrival_Time[5:16]}}</p></div>
+                                    <div class="linear"><p>прямий</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    <div class="price-btn-block">
+                        <button class="sub-btn price-btn active" type="submit" id="submitButton" value="Submit">
+                            <p class="buy">Купити за</p>
+                            <p class="price">{{direct_ticket.0.base_Price}}₴</p>
+                        </button>
+                    </div>
+                
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

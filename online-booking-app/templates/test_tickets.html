@@ -1,10 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
 <main class="ticket-block">
     <div class="h">
         <h1 class="">Підбір авіаквитків</h1>
     </div>
     <div class="form-div">
         
-        <form action="" class="form-ticket"></form>
+        <form action="{{ url_for('passangers', direct_ticket = direct_ticket, undirect_tickets = [], passengers_count = passengers_count) }}" method="POST" class="form-ticket">
             <div class="info-block">
                 
                     <div class="form-block">
@@ -42,7 +45,7 @@
             </div>
         </form>
         
-        <form action="" class="form-ticket"></form>
+        <form action="{{ url_for('passangers', direct_ticket = [], undirect_tickets = undirect_tickets, passengers_count = passengers_count) }}" method="POST" class="form-ticket">
             <div class="info-block">
                 
                     <div class="form-block">
@@ -94,9 +97,8 @@
                             <p class="price">7 730$</p>
                         </button>
                     </div>
-                
             </div>
         </form>
-        
     </div>
 </main>
+{% endblock %}
